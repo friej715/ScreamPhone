@@ -37,10 +37,11 @@ public:
     // sending the OSC messages
     ofxOscSender sender;
     
-    // volume
+    // volume & fft
     float maxLevel;
     float maxMag;
     float maxMagMapped;
+    float locationMax;
     
     
 //    void audioReceived 	(float * input, int bufferSize, int nChannels); 

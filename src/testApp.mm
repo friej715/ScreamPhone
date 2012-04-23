@@ -112,15 +112,17 @@ void testApp::draw(){
 	/* and discard the upper half of the buffer */
 	for(int j=1; j < BUFFER_SIZE/2; j++) {
 		freq[index][j] = magnitude[j];	
-        // cout << freq[index][j] << endl;
+        cout << j << endl;
         
         if (freq[index][j] > maxMag) {
             maxMag = freq[index][j];
+            locationMax = j; // this way we know the loc of the max mag, to compare it against the other player's
         }
 	}
     
-    maxMagMapped = ofMap(maxMag, 0, BUFFER_SIZE, 0, 3);
-    cout << maxMagMapped << endl;
+//    maxMagMapped = ofMap(maxMag, 0, 130, 0, 3);
+//    cout << "MaxMag" << maxMag << endl;
+//    cout << "MaxMagMapped" << maxMagMapped << endl;
     
 	/* draw the FFT */
 	for (int i = 1; i < (int)(BUFFER_SIZE/2); i++){
@@ -129,9 +131,9 @@ void testApp::draw(){
         } else {
             ofSetColor(255);
         }
-        ofRect(maxMagMapped*100, 400, BUFFER_SIZE/3, 400-100);
 		ofLine((i*8),400,(i*8),400-magnitude[i]*10.0f);
 	}
+    ofRect(locationMax*8, 0, 20, maxMag*10);
     
     ofxOscMessage m;
     m.setAddress( "/fft/levels" );
