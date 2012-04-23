@@ -112,7 +112,7 @@ void testApp::draw(){
 	/* and discard the upper half of the buffer */
 	for(int j=1; j < BUFFER_SIZE/2; j++) {
 		freq[index][j] = magnitude[j];	
-        cout << j << endl;
+//        cout << j << endl;
         
         if (freq[index][j] > maxMag) {
             maxMag = freq[index][j];
@@ -142,6 +142,13 @@ void testApp::draw(){
     
     // how can we compare them? see if the equivalent freq index (?) has about the same magnitude
     // no, that's ass backwards. see if the location of the max freq is about the same
+    
+    // let's make a test 2nd player who's at a certain frequency, just so we can see if this works
+    
+    ofxOscMessage testm;
+    testm.setAddress("/test/levels");
+    testm.addFloatArg(5);
+    sender.sendMessage(testm);
 }
 
 
