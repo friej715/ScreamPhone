@@ -137,10 +137,11 @@ void testApp::draw(){
     
     ofxOscMessage m;
     m.setAddress( "/fft/levels" );
-    m.addFloatArg(maxMag);
+    m.addFloatArg(locationMax);
     sender.sendMessage(m);
     
     // how can we compare them? see if the equivalent freq index (?) has about the same magnitude
+    // no, that's ass backwards. see if the location of the max freq is about the same
 }
 
 
