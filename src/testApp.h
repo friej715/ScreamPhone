@@ -12,7 +12,7 @@
 
 // for osc messages; change to whatever's needed
 #define HOST "localhost"
-#define PORT 12345
+#define PORT 8000
 
 class testApp : public ofxiPhoneApp{
 	
@@ -40,7 +40,6 @@ public:
     // volume & fft
     float maxLevel;
     float maxMag;
-    float maxMagMapped;
     float locationMax;
     
     

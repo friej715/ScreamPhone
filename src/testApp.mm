@@ -69,7 +69,6 @@ void testApp::update(){
 void testApp::draw(){
     
     maxMag = 0;
-    maxMagMapped = 0;
     
     ofBackground(0);
 
