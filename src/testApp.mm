@@ -63,9 +63,6 @@ void testApp::update(){
 		m.addIntArg( ofGetFrameNum() );
 		sender.sendMessage( m );
 	}
-    
-
-
 }
 
 //--------------------------------------------------------------
@@ -78,24 +75,21 @@ void testApp::draw(){
 
 	ofTranslate(0, -50, 0);
     
-//	// draw the input:
-	ofSetHexColor(0x333333);
-	ofRect(70,100,256,200);
-	ofSetHexColor(0xFFFFFF);
-	for (int i = 0; i < initialBufferSize; i++){
-		ofLine(70+i,200,70+i,200+left[i]*100.0f);
-	}
-
-	ofSetHexColor(0x333333);
-	drawCounter++;
-	char reportString[255];
-	sprintf(reportString, "buffers received: %i\ndraw routines called: %i\n", bufferCounter,drawCounter);
-	ofDrawBitmapString(reportString, 70,308);
-
-    
-    ofSetColor(255, 255, 255,255);
-//	ofRect(600, 300, sample*150, sample*150); /* audio sigs go between -1 and 1. See?*/
-//	ofCircle(200, 300, wave*150);
+//  draw the input:
+//	ofSetHexColor(0x333333);
+//	ofRect(70,100,256,200);
+//	ofSetHexColor(0xFFFFFF);
+//	for (int i = 0; i < initialBufferSize; i++){
+//		ofLine(70+i,200,70+i,200+left[i]*100.0f);
+//	}
+//
+//	ofSetHexColor(0x333333);
+//	drawCounter++;
+//	char reportString[255];
+//	sprintf(reportString, "buffers received: %i\ndraw routines called: %i\n", bufferCounter,drawCounter);
+//	ofDrawBitmapString(reportString, 70,308);
+//
+//    ofSetColor(255, 255, 255,255);
     
     static int index=0;
 	float avg_power = 0.0f;	
@@ -112,7 +106,6 @@ void testApp::draw(){
 	/* and discard the upper half of the buffer */
 	for(int j=1; j < BUFFER_SIZE/2; j++) {
 		freq[index][j] = magnitude[j];	
-//        cout << j << endl;
         
         if (freq[index][j] > maxMag) {
             maxMag = freq[index][j];
@@ -120,35 +113,32 @@ void testApp::draw(){
         }
 	}
     
-//    maxMagMapped = ofMap(maxMag, 0, 130, 0, 3);
-//    cout << "MaxMag" << maxMag << endl;
-//    cout << "MaxMagMapped" << maxMagMapped << endl;
-    
 	/* draw the FFT */
-	for (int i = 1; i < (int)(BUFFER_SIZE/2); i++){
-        if (magnitude[i] == maxMag) {
-            ofSetColor(255, 0, 0);
-        } else {
-            ofSetColor(255);
-        }
-		ofLine((i*8),400,(i*8),400-magnitude[i]*10.0f);
-	}
-    ofRect(locationMax*8, 0, 20, maxMag*10);
+//	for (int i = 1; i < (int)(BUFFER_SIZE/2); i++){
+//        if (magnitude[i] == maxMag) {
+//            ofSetColor(255, 0, 0);
+//        } else {
+//            ofSetColor(255);
+//        }
+//		ofLine((i*8),400,(i*8),400-magnitude[i]*10.0f);
+//	}
+//    ofRect(locationMax*8, 0, 20, maxMag*10);
     
     ofxOscMessage m;
     m.setAddress( "/fft/levels" );
     m.addFloatArg(locationMax);
     sender.sendMessage(m);
     
-    // how can we compare them? see if the equivalent freq index (?) has about the same magnitude
-    // no, that's ass backwards. see if the location of the max freq is about the same
-    
-    // let's make a test 2nd player who's at a certain frequency, just so we can see if this works
+    // let's make a test 2nd player who's at a certain frequency, just so we can see if this works.
+    // will we need a different app for each device? just in terms of the location set? there's gotta be an easier way to do it, but that might save time...
     
     ofxOscMessage testm;
     testm.setAddress("/test/levels");
     testm.addFloatArg(5);
     sender.sendMessage(testm);
+    
+    ofDrawBitmapString("Location Of Max: " + ofToString(locationMax), 70, 308);
+    ofDrawBitmapString("Volume: " + ofToString(maxLevel), 70, 350);
 }
 
 
